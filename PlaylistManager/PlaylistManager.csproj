@@ -64,9 +64,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ActionCommand.cs" />
+    <Compile Include="PlaylistItem.cs" />
     <Compile Include="Playlist.xaml.cs">
       <DependentUpon>Playlist.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TabContainer.cs" />
     <Compile Include="ViewModel.cs" />
     <Page Include="Playlist.xaml">
       <SubType>Designer</SubType>

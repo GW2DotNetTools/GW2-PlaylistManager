@@ -9,6 +9,8 @@ namespace PlaylistManager
     {
         private void Application_Startup(object sender, StartupEventArgs e)
         {
+
+
             ViewModel viewModel = new ViewModel();
             View view = new View(viewModel);
             view.Show();
