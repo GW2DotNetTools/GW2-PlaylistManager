@@ -11,21 +11,30 @@ namespace PlaylistManager
         public event PropertyChangedEventHandler PropertyChanged;
 
         private bool areInformationsVisible;
+        private int selectedContainer;
 
-        public ViewModel()
+        public ViewModel(List<TabContainer> containers)
         {
+            Containers = new ObservableCollection<TabContainer>(containers);
             OpenWikiLinkCmd = new ActionCommand(x => Process.Start("https://wiki.guildwars2.com/wiki/Customized_soundtrack"));
             ShowMoreInformationsCmd = new ActionCommand(x => AreInformationsVisible = true);
-            Containers = new List<TabContainer>();
-            Containers.Add(new TabContainer("blubb", new List<PlaylistItem> { new PlaylistItem("a", "3:45") }));
-            Containers.Add(new TabContainer("blubb2", new List<PlaylistItem> { new PlaylistItem("a2", "3:45") }));
         }
 
         public ICommand OpenWikiLinkCmd { get; set; }
 
         public ICommand ShowMoreInformationsCmd { get; set; }
 
-        public List<TabContainer> Containers { get; private set; }
+        public ObservableCollection<TabContainer> Containers { get; private set; }
+
+        public int SelectedContainer
+        {
+            get { return selectedContainer; }
+            set
+            {
+                selectedContainer = value;
+                NotifyPropertyChanged(nameof(SelectedContainer));
+            }
+        }
 
         public bool AreInformationsVisible
         {

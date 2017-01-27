@@ -1,17 +1,18 @@
-﻿using System.Collections.Generic;
-
-namespace PlaylistManager
+﻿namespace PlaylistManager
 {
     public class TabContainer
     {
-        public TabContainer(string header, List<PlaylistItem> playlistEntries)
+        public TabContainer(string header, PlaylistView view, PlaylistViewModel playlistViewModel)
         {
             Header = header;
-            PlaylistEntries = playlistEntries;
+            View = view;
+            PlaylistViewModel = playlistViewModel;
         }
 
-        public string Header { get; }
+        public string Header { get; private set; }
 
-        public List<PlaylistItem> PlaylistEntries { get; }
+        public PlaylistView View { get; private set; }
+
+        public PlaylistViewModel PlaylistViewModel { get; private set; }
     }
 }

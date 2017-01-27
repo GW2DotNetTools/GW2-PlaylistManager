@@ -58,35 +58,16 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TabControl Grid.Row="1"
-                    TabStripPlacement="Left">
-            <TabItem Header="Ambient">
-                <local:Playlist/>
-            </TabItem>
-            <TabItem Header="Battle">
-                <local:Playlist />
-            </TabItem>
-            <TabItem Header="BossBattle">
-                <local:Playlist />
-            </TabItem>
-            <TabItem Header="City">
-                <local:Playlist />
-            </TabItem>
-            <TabItem Header="Defeated">
-                <local:Playlist />
-            </TabItem>
-            <TabItem Header="MainMenu">
-                <local:Playlist />
-            </TabItem>
-            <TabItem Header="NightTime">
-                <local:Playlist />
-            </TabItem>
-            <TabItem Header="Underwater">
-                <local:Playlist />
-            </TabItem>
-            <TabItem Header="Victory">
-                <local:Playlist />
-            </TabItem>
-        </TabControl>
+        <Controls:MetroTabControl Grid.Row="1"
+                                  TabStripPlacement="Left"
+                                  ItemsSource="{Binding Path=Containers}"
+                                  SelectedIndex="{Binding Path=SelectedContainer, UpdateSourceTrigger=PropertyChanged}">
+            <Controls:MetroTabControl.Resources>
+                <Style TargetType="Controls:MetroTabItem" BasedOn="{StaticResource {x:Type Controls:MetroTabItem}}">
+                    <Setter Property="Header" Value="{Binding Path=Header}"/>
+                    <Setter Property="Content" Value="{Binding Path=View}"/>
+                </Style>
+            </Controls:MetroTabControl.Resources>
+        </Controls:MetroTabControl>
     </Grid>
 </Controls:MetroWindow>

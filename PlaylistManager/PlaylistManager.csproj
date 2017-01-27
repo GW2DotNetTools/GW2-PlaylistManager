@@ -64,13 +64,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ActionCommand.cs" />
-    <Compile Include="PlaylistItem.cs" />
-    <Compile Include="Playlist.xaml.cs">
-      <DependentUpon>Playlist.xaml</DependentUpon>
+    <Compile Include="Playlist\PlaylistItem.cs" />
+    <Compile Include="Playlist\PlaylistView.xaml.cs">
+      <DependentUpon>PlaylistView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Playlist\PlaylistViewModel.cs" />
     <Compile Include="TabContainer.cs" />
     <Compile Include="ViewModel.cs" />
-    <Page Include="Playlist.xaml">
+    <Page Include="Playlist\PlaylistView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
