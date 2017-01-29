@@ -26,13 +26,17 @@
         </GroupBox.Header>
         <DataGrid ItemsSource="{Binding Path=PlaylistEntries, UpdateSourceTrigger=PropertyChanged}"
                   AutoGenerateColumns="False"
-                  CanUserDeleteRows="False">
+                  CanUserDeleteRows="True"
+                  AllowDrop="True"
+                  Drop="DataGrid_Drop">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Title"
                                     Binding="{Binding Path=Title}"
+                                    IsReadOnly="True"
                                     Width="*"/>
-                <DataGridTextColumn Header="Duration" 
-                                    Binding="{Binding Path=Duration}"
+                <DataGridTextColumn Header="Type" 
+                                    Binding="{Binding Path=Type}"
+                                    IsReadOnly="True"
                                     Width="auto"/>
             </DataGrid.Columns>
         </DataGrid>

@@ -2,14 +2,14 @@
 {
     public class PlaylistItem
     {
-        public PlaylistItem(string title, string duration)
+        public PlaylistItem(string title, string type)
         {
             Title = title;
-            Duration = duration;
+            Type = type;
         }
 
         public string Title { get; }
 
-        public string Duration { get; }
+        public string Type { get; }
     }
 }
