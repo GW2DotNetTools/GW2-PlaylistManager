@@ -18,13 +18,16 @@ namespace PlaylistManager
             ".wav"
         };
 
-        public PlaylistViewModel(string header)
+        public PlaylistViewModel(string header, string infotext)
         {
             Header = header;
+            InfoText = infotext;
             PlaylistEntries = new ObservableCollection<PlaylistItem>();
         }
 
         public string Header { get; private set; }
+
+        public string InfoText { get; private set; }
 
         public ObservableCollection<PlaylistItem> PlaylistEntries { get; private set; }
 
@@ -41,6 +44,18 @@ namespace PlaylistManager
                 {
                     PlaylistEntries.Add(new PlaylistItem(fileName, extension));
                 }
+            }
+
+            CreateOrEditPlaylist();
+        }
+
+        private void CreateOrEditPlaylist()
+        {
+            string playlistName = $"{PlaylistPaths.MainFolder}\\{Header}{PlaylistPaths.PlaylistEnding}";
+
+            if (!File.Exists(playlistName))
+            {
+                File.Create(playlistName);
             }
         }
     }

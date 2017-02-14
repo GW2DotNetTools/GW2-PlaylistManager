@@ -22,7 +22,7 @@
             <TextBlock HorizontalAlignment="Center"
                        VerticalAlignment="Center"
                        Foreground="White"
-                       Text="{Binding Path=Header, UpdateSourceTrigger=PropertyChanged}"/>
+                       Text="{Binding Path=InfoText, UpdateSourceTrigger=PropertyChanged}"/>
         </GroupBox.Header>
         <DataGrid ItemsSource="{Binding Path=PlaylistEntries, UpdateSourceTrigger=PropertyChanged}"
                   AutoGenerateColumns="False"

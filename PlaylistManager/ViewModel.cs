@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Windows.Input;
 
 namespace PlaylistManager
@@ -18,6 +19,7 @@ namespace PlaylistManager
             Containers = new ObservableCollection<TabContainer>(containers);
             OpenWikiLinkCmd = new ActionCommand(x => Process.Start("https://wiki.guildwars2.com/wiki/Customized_soundtrack"));
             ShowMoreInformationsCmd = new ActionCommand(x => AreInformationsVisible = true);
+            Directory.CreateDirectory(PlaylistPaths.MainFolder);
         }
 
         public ICommand OpenWikiLinkCmd { get; set; }
