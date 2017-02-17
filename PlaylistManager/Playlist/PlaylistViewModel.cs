@@ -55,8 +55,22 @@ namespace PlaylistManager
 
             if (!File.Exists(playlistName))
             {
-                File.Create(playlistName);
+                File.WriteAllText(playlistName, "#EXTM3U"); // Writes the File header
             }
+
+            /*
+             * #EXTM3U  File header. Must be the first line of the file.
+             * #EXTINF	Track information, including runtime and title.
+             * 
+            #EXTM3U
+            #EXTINF:%DURATIONSINSECONDS%,%TITLE%
+            %FILEPATH%
+            */
         }
     }
 }
+ 
+ 
+ 
+ 
+ 
