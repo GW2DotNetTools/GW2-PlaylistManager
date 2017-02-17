@@ -20,5 +20,10 @@ namespace PlaylistManager
         {
             viewModel.Drop(sender, e);
         }
+
+        private void DataGrid_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            viewModel.DoubleClick(datagrid.SelectedItem, e);
+        }
     }
 }

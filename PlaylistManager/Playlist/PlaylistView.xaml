@@ -28,14 +28,16 @@
                   AutoGenerateColumns="False"
                   CanUserDeleteRows="True"
                   AllowDrop="True"
+                  Name="datagrid"
+                  MouseDoubleClick="DataGrid_MouseDoubleClick"
                   Drop="DataGrid_Drop">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Title"
-                                    Binding="{Binding Path=Title}"
+                                    Binding="{Binding Path=TitleDisplay}"
                                     IsReadOnly="True"
                                     Width="*"/>
-                <DataGridTextColumn Header="Type" 
-                                    Binding="{Binding Path=Type}"
+                <DataGridTextColumn Header="Duration" 
+                                    Binding="{Binding Path=DurationDisplay}"
                                     IsReadOnly="True"
                                     Width="auto"/>
             </DataGrid.Columns>
