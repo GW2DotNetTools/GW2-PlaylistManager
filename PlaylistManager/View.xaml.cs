@@ -1,4 +1,5 @@
 ﻿using MahApps.Metro.Controls;
+using System.Reflection;
 
 namespace PlaylistManager
 {
@@ -11,6 +12,9 @@ namespace PlaylistManager
         {
             InitializeComponent();
             this.DataContext = viewModel;
+
+            var version = Assembly.GetExecutingAssembly().GetName().Version;
+            Title += $" - {version.Major}.{version.Minor}.{version.Build}";
         }
     }
 }
