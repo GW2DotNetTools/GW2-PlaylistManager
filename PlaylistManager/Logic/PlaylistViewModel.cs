@@ -1,4 +1,6 @@
-﻿using NAudio.Wave;
+﻿using MahApps.Metro.Controls.Dialogs;
+using NAudio.Wave;
+using PlaylistManager.Logic;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,16 +15,11 @@ namespace PlaylistManager
 {
     public class PlaylistViewModel
     {
-        private string playlistPath;
+        public delegate void MessageBoxRaiseHandler(object sender, MessageBoxRaiseEvent e);
+        public event MessageBoxRaiseHandler OnMessageBoxRaise;
 
-        private readonly List<string> AllowedFileTypes = new List<string>
-        {
-            ".aiff",
-            ".flac",
-            ".mp3",
-            ".ogg",
-            ".wav"
-        };
+        private string playlistPath;
+        private readonly List<string> AllowedFileTypes = new List<string> { ".aiff", ".flac", ".mp3", ".ogg", ".wav" };
 
         public PlaylistViewModel(string header, string infotext)
         {
@@ -51,14 +48,14 @@ namespace PlaylistManager
         {
             object droppedData = e.Data.GetData(DataFormats.FileDrop);
             List<PlaylistItem> newlyAddedItems = new List<PlaylistItem>();
+            List<string> errors = new List<string>();
 
             foreach (string filePath in (string[])droppedData)
             {
                 string extension = Path.GetExtension(filePath);
                 string fileName = Path.GetFileNameWithoutExtension(filePath);
 
-
-                if (!PlaylistEntries.Any(x => x.Title == fileName) 
+                if (!PlaylistEntries.Any(x => x.Title == fileName)
                     && AllowedFileTypes.Any(x => x == extension))
                 {
                     var duration = GetSongDurationInSeconds(filePath);
@@ -66,6 +63,20 @@ namespace PlaylistManager
                     newlyAddedItems.Add(item);
                     PlaylistEntries.Add(item);
                 }
+                else
+                {
+                    if (!string.IsNullOrWhiteSpace(extension))
+                    {
+                        errors.Add(extension);
+                    }
+                }
+            }
+
+            if (errors.Count > 0)
+            {
+                OnMessageBoxRaise(this, new MessageBoxRaiseEvent("Ups! Something went wrong.", 
+                    $"The following extensions are not supported:{Environment.NewLine}{string.Join(Environment.NewLine, errors)}",
+                    MessageDialogStyle.Affirmative));
             }
 
             AddToPlaylist(newlyAddedItems);
@@ -140,8 +151,7 @@ namespace PlaylistManager
         }
     }
 }
- 
- 
- 
- 
- 
+
+
+
+

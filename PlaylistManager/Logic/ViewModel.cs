@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using PlaylistManager.Logic;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -11,6 +12,9 @@ namespace PlaylistManager
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public delegate void MessageBoxRaiseHandler(object sender, MessageBoxRaiseEvent e);
+        public event MessageBoxRaiseHandler OnMessageBoxRaise;
+
         private bool areInformationsVisible;
         private int selectedContainer;
 
@@ -20,6 +24,11 @@ namespace PlaylistManager
             OpenWikiLinkCmd = new ActionCommand(x => Process.Start("https://wiki.guildwars2.com/wiki/Customized_soundtrack"));
             ShowMoreInformationsCmd = new ActionCommand(x => AreInformationsVisible = true);
             Directory.CreateDirectory(PlaylistPaths.MainFolder);
+
+            foreach (var container in containers)
+            {
+                container.PlaylistViewModel.OnMessageBoxRaise += (o, e) => OnMessageBoxRaise(o, e);
+            }
         }
 
         public ICommand OpenWikiLinkCmd { get; set; }

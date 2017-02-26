@@ -70,6 +70,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Logic\ActionCommand.cs" />
+    <Compile Include="Logic\MessageBoxRaiseEvent.cs" />
     <Compile Include="Logic\PlaylistPaths.cs" />
     <Compile Include="Logic\PlaylistItem.cs" />
     <Compile Include="UI\PlaylistView.xaml.cs">
