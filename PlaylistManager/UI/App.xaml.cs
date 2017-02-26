@@ -10,14 +10,14 @@ namespace PlaylistManager.UI
     {
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            var ambientViewModel = new PlaylistViewModel("Ambient", "Default playlist when no other criteria are met");
-            var battleViewModel = new PlaylistViewModel("Battle", "\"Large\" fights involving many foes (~5 or more enemies); some personal story steps; PvP");
-            var bossBattleViewModel = new PlaylistViewModel("BossBattle", "World bosses and some Dungeon bosses; some personal story steps; some Activities");
-            var cityViewModel = new PlaylistViewModel("City", "When inside one of the main cities, such as The Black Citadel, but not always");
-            var defeatedViewModel = new PlaylistViewModel("Defeated", "Upon being Defeated");
-            var mainMenuViewModel = new PlaylistViewModel("MainMenu", "At the character select screen");
-            var nightTimeViewModel = new PlaylistViewModel("NightTime", "When in some explorable areas and it is nighttime (the moon is out)");
-            var underwaterViewModel = new PlaylistViewModel("Underwater", "Any time the breathing apparatus is equipped. Overrides most other playlists");
+            var ambientViewModel = new PlaylistViewModel("Ambient", "Music that plays when no other criteria are met");
+            var battleViewModel = new PlaylistViewModel("Battle", "Music that plays in \"large\" fights involving many foes (~5 or more enemies); some personal story steps; PvP");
+            var bossBattleViewModel = new PlaylistViewModel("BossBattle", "Music that plays when fighting world bosses and some Dungeon bosses; some personal story steps; some Activities");
+            var cityViewModel = new PlaylistViewModel("City", "Music that plays when inside one of the main cities, such as The Black Citadel, but not always");
+            var defeatedViewModel = new PlaylistViewModel("Defeated", "Music that plays upon being Defeated");
+            var mainMenuViewModel = new PlaylistViewModel("MainMenu", "Music that plays at the character select screen");
+            var nightTimeViewModel = new PlaylistViewModel("NightTime", "Music that plays when in some explorable areas and it is nighttime (the moon is out)");
+            var underwaterViewModel = new PlaylistViewModel("Underwater", "Music that plays any time the breathing apparatus is equipped. Overrides most other playlists");
             var victoryViewModel = new PlaylistViewModel("Victory", "Music that plays after World bosses or Meta events");
 
             List<TabContainer> containers = new List<TabContainer>
