@@ -8,6 +8,7 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 
@@ -54,32 +55,48 @@ namespace PlaylistManager
             {
                 string extension = Path.GetExtension(filePath);
                 string fileName = Path.GetFileNameWithoutExtension(filePath);
+                string error = string.Empty;
 
-                if (!PlaylistEntries.Any(x => x.Title == fileName)
-                    && AllowedFileTypes.Any(x => x == extension))
+                if (IsVaildEntry(extension, filePath, fileName, out error))
                 {
                     var duration = GetSongDurationInSeconds(filePath);
                     PlaylistItem item = new PlaylistItem(fileName, extension, duration, filePath);
                     newlyAddedItems.Add(item);
                     PlaylistEntries.Add(item);
                 }
-                else
+
+                if (!string.IsNullOrWhiteSpace(error))
                 {
-                    if (!string.IsNullOrWhiteSpace(extension))
-                    {
-                        errors.Add(extension);
-                    }
+                    errors.Add(error);
                 }
             }
 
             if (errors.Count > 0)
             {
                 OnMessageBoxRaise(this, new MessageBoxRaiseEvent("Ups! Something went wrong.", 
-                    $"The following extensions are not supported:{Environment.NewLine}{string.Join(Environment.NewLine, errors)}",
+                    $"{string.Join(Environment.NewLine, errors)}",
                     MessageDialogStyle.Affirmative));
             }
 
             AddToPlaylist(newlyAddedItems);
+        }
+
+        private bool IsVaildEntry(string extension, string filePath, string fileName, out string error)
+        {
+            error = string.Empty;
+            if (!AllowedFileTypes.Any(x => x == extension))
+            {
+                error = $"The extension '{extension}' is not supported.";
+                return false;
+            }
+
+            if (!Regex.Match(filePath, @"^[A-Za-z\d_!|\:;-]*$").Success) //todo
+            {
+                error = $"The file '{fileName}{extension}' contains invalid characters.";
+                return false;
+            }
+
+            return !PlaylistEntries.Any(x => x.Title == fileName);
         }
 
         private double GetSongDurationInSeconds(string filePath)
