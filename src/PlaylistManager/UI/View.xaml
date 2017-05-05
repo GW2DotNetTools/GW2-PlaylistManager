@@ -8,7 +8,7 @@
                       WindowStartupLocation="CenterScreen"
                       EnableDWMDropShadow="True"
                       Title="GW2 Playlist Manager" 
-                      Icon="..\Ressources\icon.png"
+                      Icon="..\Resources\icon.png"
                       Height="600" 
                       Width="800"
                       MinWidth="800"
