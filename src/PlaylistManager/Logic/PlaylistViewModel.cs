@@ -27,7 +27,7 @@ namespace PlaylistManager
             Header = header;
             InfoText = infotext;
             playlistPath = $"{PlaylistPaths.MainFolder}\\{Header}{PlaylistPaths.PlaylistEnding}";
-            PlaylistEntries = new ObservableCollection<PlaylistItem>(LoadPlaylist());
+            PlaylistEntries = new ObservableCollection<PlaylistItem>();
             PlaylistEntries.CollectionChanged += PlaylistEntries_CollectionChanged;
         }
 
@@ -36,6 +36,14 @@ namespace PlaylistManager
         public string InfoText { get; private set; }
 
         public ObservableCollection<PlaylistItem> PlaylistEntries { get; private set; }
+
+        public void OnLoad()
+        {
+            foreach (var item in LoadPlaylist())
+            {
+                PlaylistEntries.Add(item);
+            }
+        }
 
         public void DoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -90,7 +98,7 @@ namespace PlaylistManager
                 return false;
             }
 
-            if (!Regex.Match(filePath, @"^[A-Za-z\d_!|\:;-]*$").Success) //todo
+            if (fileName.ToArray().Any(x => x > 175)) // Everything after 175 is not relevant for us
             {
                 error = $"The file '{fileName}{extension}' contains invalid characters.";
                 return false;
@@ -137,8 +145,12 @@ namespace PlaylistManager
             {
                 bool skipHeader = true;
                 int count = 0;
+                int currentLine = -1;
+                List<string> errors = new List<string>();
+                List<int> linesToRemove = new List<int>();
                 foreach (var item in File.ReadAllLines(playlistPath))
                 {
+                    currentLine++;
                     if (skipHeader)
                     {
                         skipHeader = false;
@@ -151,12 +163,43 @@ namespace PlaylistManager
                         continue;
                     }
 
-                    items.Add(new PlaylistItem(Path.GetFileNameWithoutExtension(item), Path.GetExtension(item), GetSongDurationInSeconds(item), item));
+                    try
+                    {
+                        items.Add(new PlaylistItem(Path.GetFileNameWithoutExtension(item), Path.GetExtension(item), GetSongDurationInSeconds(item), item));
+                    }
+                    catch (FileNotFoundException)
+                    {
+                        linesToRemove.Add(currentLine -1); // We also have to remove the header of the missing file.
+                        linesToRemove.Add(currentLine);
+                        errors.Add(item);
+                    }
+
                     count = 0;
+                }
+
+                if (errors.Count > 0)
+                {
+                    string oneOrMoreMissingFiles = errors.Count > 1 ? "file was" : "files were";
+                    OnMessageBoxRaise(this, new MessageBoxRaiseEvent($"The following {oneOrMoreMissingFiles} not found:",
+                        $"{string.Join(Environment.NewLine, errors)}",
+                        MessageDialogStyle.Affirmative));
+                    RemoveMissingFiles(linesToRemove.OrderByDescending(x => x).ToList());
                 }
             }
 
             return items;
+        }
+
+        private void RemoveMissingFiles(List<int> linesToRemove)
+        {
+            var allLines = File.ReadAllLines(playlistPath).ToList();
+
+            for (int i = 0; i < linesToRemove.Count; i++)
+            {
+                allLines.RemoveAt(linesToRemove[i]);
+            }
+
+            File.WriteAllLines(playlistPath, allLines);
         }
 
         private void CreatePlaylist()
@@ -168,7 +211,3 @@ namespace PlaylistManager
         }
     }
 }
-
-
-
-

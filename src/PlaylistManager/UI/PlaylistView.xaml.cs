@@ -25,5 +25,10 @@ namespace PlaylistManager.UI
         {
             viewModel.DoubleClick(datagrid.SelectedItem, e);
         }
+
+        private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            viewModel.OnLoad();
+        }
     }
 }
