@@ -16,6 +16,7 @@ namespace PlaylistManager
         public event MessageBoxRaiseHandler OnMessageBoxRaise;
 
         private bool areInformationsVisible;
+        private bool isStylePickerVisible;
         private int selectedContainer;
 
         public ViewModel(List<TabContainer> containers)
@@ -23,6 +24,7 @@ namespace PlaylistManager
             Containers = new ObservableCollection<TabContainer>(containers);
             OpenWikiLinkCmd = new ActionCommand(x => Process.Start("https://wiki.guildwars2.com/wiki/Customized_soundtrack"));
             ShowMoreInformationsCmd = new ActionCommand(x => AreInformationsVisible = true);
+            ShowStyleChangeCmd = new ActionCommand(x => IsStylePickerVisible = true);
             Directory.CreateDirectory(PlaylistPaths.MainFolder);
 
             foreach (var container in containers)
@@ -34,6 +36,8 @@ namespace PlaylistManager
         public ICommand OpenWikiLinkCmd { get; set; }
 
         public ICommand ShowMoreInformationsCmd { get; set; }
+
+        public ICommand ShowStyleChangeCmd { get; set; }
 
         public ObservableCollection<TabContainer> Containers { get; private set; }
 
@@ -54,6 +58,16 @@ namespace PlaylistManager
             {
                 areInformationsVisible = value;
                 NotifyPropertyChanged(nameof(AreInformationsVisible));
+            }
+        }
+
+        public bool IsStylePickerVisible
+        {
+            get { return isStylePickerVisible; }
+            set
+            {
+                isStylePickerVisible = value;
+                NotifyPropertyChanged(nameof(IsStylePickerVisible));
             }
         }
 

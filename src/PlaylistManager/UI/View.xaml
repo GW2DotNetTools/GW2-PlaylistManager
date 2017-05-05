@@ -3,6 +3,7 @@
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      xmlns:metro="clr-namespace:MahApps.Metro;assembly=MahApps.Metro"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       mc:Ignorable="d"
                       WindowStartupLocation="CenterScreen"
@@ -13,20 +14,11 @@
                       Width="800"
                       MinWidth="800"
                       MinHeight="600">
-    <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Orange.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
 
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
+            <Button Content="Change Style"
+                    Command="{Binding Path=ShowStyleChangeCmd}"/>
             <Button Content="Informations" 
                     ToolTip="Show more Informations about playlists"
                     Command="{Binding Path=ShowMoreInformationsCmd}"/>
@@ -34,6 +26,31 @@
     </Controls:MetroWindow.RightWindowCommands>
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl>
+            <Controls:Flyout Header="Style Picker" Position="Right" Width="270" IsOpen="{Binding Path=IsStylePickerVisible, UpdateSourceTrigger=PropertyChanged}">
+                <Grid Margin="6">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Accents" Margin="0 0 2 0" VerticalAlignment="Center" />
+
+                    <ComboBox x:Name="AccentSelector"
+                              Grid.Row="1"
+                              Margin="0 0 2 0"
+                              VerticalAlignment="Center"
+                              SelectionChanged="AccentSelectionChanged"
+                              ItemsSource="{x:Static metro:ThemeManager.Accents}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </Grid>
+            </Controls:Flyout>
             <Controls:Flyout Header="Informations" Position="Right" Width="400" IsOpen="{Binding Path=AreInformationsVisible, UpdateSourceTrigger=PropertyChanged}">
                 <TextBlock TextWrapping="Wrap" Margin="6">
                     <TextBlock FontWeight="Bold">Supported media</TextBlock><LineBreak/>

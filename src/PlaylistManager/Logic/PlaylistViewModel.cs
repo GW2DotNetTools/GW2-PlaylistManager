@@ -27,7 +27,7 @@ namespace PlaylistManager
             Header = header;
             InfoText = infotext;
             playlistPath = $"{PlaylistPaths.MainFolder}\\{Header}{PlaylistPaths.PlaylistEnding}";
-            PlaylistEntries = new ObservableCollection<PlaylistItem>();
+            PlaylistEntries = new ObservableCollection<PlaylistItem>(LoadPlaylist());
             PlaylistEntries.CollectionChanged += PlaylistEntries_CollectionChanged;
         }
 
@@ -36,14 +36,6 @@ namespace PlaylistManager
         public string InfoText { get; private set; }
 
         public ObservableCollection<PlaylistItem> PlaylistEntries { get; private set; }
-
-        public void OnLoad()
-        {
-            foreach (var item in LoadPlaylist())
-            {
-                PlaylistEntries.Add(item);
-            }
-        }
 
         public void DoubleClick(object sender, MouseButtonEventArgs e)
         {
