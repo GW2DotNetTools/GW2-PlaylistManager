@@ -17,7 +17,7 @@
 
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
-            <Button Content="Change Style"
+            <Button Content="Options"
                     Command="{Binding Path=ShowStyleChangeCmd}"/>
             <Button Content="Informations" 
                     ToolTip="Show more Informations about playlists"
@@ -26,29 +26,16 @@
     </Controls:MetroWindow.RightWindowCommands>
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl>
-            <Controls:Flyout Header="Style Picker" Position="Right" Width="270" IsOpen="{Binding Path=IsStylePickerVisible, UpdateSourceTrigger=PropertyChanged}">
+            <Controls:Flyout Header="Options" Position="Right" Width="270" IsOpen="{Binding Path=IsStylePickerVisible, UpdateSourceTrigger=PropertyChanged}">
                 <Grid Margin="6">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-
-                    <TextBlock Text="Accents" Margin="0 0 2 0" VerticalAlignment="Center" />
-
-                    <ComboBox x:Name="AccentSelector"
-                              Grid.Row="1"
-                              Margin="0 0 2 0"
-                              VerticalAlignment="Center"
-                              SelectionChanged="AccentSelectionChanged"
-                              ItemsSource="{x:Static metro:ThemeManager.Accents}">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Name}" />
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
+                    <Button Content="Clear all Playlists"
+                            Margin="0 0 0 6"
+                            Command="{Binding Path=ClearPlaylistsCmd}"/>
                 </Grid>
             </Controls:Flyout>
             <Controls:Flyout Header="Informations" Position="Right" Width="400" IsOpen="{Binding Path=AreInformationsVisible, UpdateSourceTrigger=PropertyChanged}">

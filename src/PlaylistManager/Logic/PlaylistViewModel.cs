@@ -107,7 +107,7 @@ namespace PlaylistManager
 
         private void PlaylistEntries_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (e.Action == NotifyCollectionChangedAction.Remove)
+            if (e.Action == NotifyCollectionChangedAction.Remove || e.Action == NotifyCollectionChangedAction.Reset)
             {
                 File.Delete(playlistPath);
                 AddToPlaylist(PlaylistEntries.ToList());

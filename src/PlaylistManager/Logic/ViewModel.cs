@@ -5,6 +5,10 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Input;
+using System;
+using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro;
+using System.Windows;
 
 namespace PlaylistManager
 {
@@ -25,6 +29,7 @@ namespace PlaylistManager
             OpenWikiLinkCmd = new ActionCommand(x => Process.Start("https://wiki.guildwars2.com/wiki/Customized_soundtrack"));
             ShowMoreInformationsCmd = new ActionCommand(x => AreInformationsVisible = true);
             ShowStyleChangeCmd = new ActionCommand(x => IsStylePickerVisible = true);
+            ClearPlaylistsCmd = new ActionCommand(ClearAllPlaylists);
             Directory.CreateDirectory(PlaylistPaths.MainFolder);
 
             foreach (var container in containers)
@@ -38,6 +43,8 @@ namespace PlaylistManager
         public ICommand ShowMoreInformationsCmd { get; set; }
 
         public ICommand ShowStyleChangeCmd { get; set; }
+
+        public ICommand ClearPlaylistsCmd { get; set; }
 
         public ObservableCollection<TabContainer> Containers { get; private set; }
 
@@ -74,6 +81,14 @@ namespace PlaylistManager
         protected void NotifyPropertyChanged(string prop)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+        }
+
+        private void ClearAllPlaylists()
+        {
+            foreach (var container in Containers)
+            {
+                container.PlaylistViewModel.PlaylistEntries.Clear();
+            }
         }
     }
 }
